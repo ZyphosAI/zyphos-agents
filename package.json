@@ -1,0 +1,25 @@
+{
+  "name": "zyphos-agents",
+  "version": "0.1.0",
+  "description": "Open-source agentic framework for deploying AI agents across any business domain",
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "build": "tsc --build",
+    "test": "jest",
+    "lint": "eslint packages/*/src/**/*.ts"
+  },
+  "keywords": [
+    "ai-agents",
+    "llm",
+    "anthropic",
+    "orchestrator",
+    "enterprise-ai",
+    "typescript",
+    "workflow-automation"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ZyphosAI/zyphos-agents"
+  }
+}

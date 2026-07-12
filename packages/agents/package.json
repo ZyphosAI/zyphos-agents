@@ -1,0 +1,20 @@
+{
+  "name": "@zyphos/agents",
+  "version": "0.1.0",
+  "description": "Core ZyphosAgent class with LLM execution, retry logic, and provider fallback",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["ai-agents", "llm", "anthropic", "openai", "typescript"],
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.0",
+    "openai": "^4.68.0"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3"
+  }
+}

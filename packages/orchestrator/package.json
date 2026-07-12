@@ -1,0 +1,21 @@
+{
+  "name": "@zyphos/orchestrator",
+  "version": "0.1.0",
+  "description": "Sequential, Supervisor, and Parallel orchestration patterns for ZyphosAgents",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["orchestrator", "ai-agents", "workflow", "typescript"],
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.0",
+    "openai": "^4.68.0",
+    "@zyphos/agents": "^0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3"
+  }
+}
