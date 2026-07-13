@@ -52,9 +52,9 @@ const PATTERNS = {
     label: "EMAIL",
   },
   phone: {
-    // Matches: +1-555-123-4567, (555) 123-4567, 555.123.4567, etc.
+    // Matches: +91 98765 43210, +1-555-123-4567, (555) 123-4567, 555.123.4567, etc.
     regex:
-      /(\+?1[\s.\-]?)?(\(?\d{3}\)?[\s.\-]?)(\d{3}[\s.\-]?\d{4})\b/g,
+      /(?<!\d)(?:\+91[\s.\-]?\d{5}[\s.\-]?\d{5}|(?:\+?1[\s.\-]?)?(?:\(?\d{3}\)?[\s.\-]?)\d{3}[\s.\-]?\d{4})(?!\d)/g,
     label: "PHONE",
   },
   ssn: {
@@ -62,8 +62,8 @@ const PATTERNS = {
     label: "SSN",
   },
   creditCard: {
-    // 13–19 contiguous digits (very rough; catches most card formats)
-    regex: /\b(?:\d[ \-]?){13,19}\b/g,
+    // 13–19 contiguous digits, or 4-digit groups separated by spaces/dashes.
+    regex: /\b(?:\d{13,19}|\d{4}(?:[ \-]\d{4}){3,4})\b/g,
     label: "CARD_NUMBER",
   },
   ipv4: {
