@@ -2,22 +2,67 @@
 
 > Open-source agentic framework for deploying AI agents across any business domain.
 
-Extracted from [Zyphos](https://github.com/kirankshetty/Zyphos) — a production AI-powered business platform — and generalised into four standalone, composable packages.
+Extracted from [Zyphos](https://github.com/kirankshetty/Zyphos) — a production
+AI-powered business platform — and generalised into six standalone,
+composable packages.
+
+![MIT License](https://img.shields.io/badge/license-MIT-green)
+![TypeScript](https://img.shields.io/badge/TypeScript-100%25-blue)
+![npm](https://img.shields.io/badge/npm-%40zyphos-red)
+
+---
+
+## ⚡ Run your first agent in 5 minutes
+
+**Step 1 — Clone and install**
+
+```bash
+git clone https://github.com/kirankshetty/zyphos-agents.git
+cd zyphos-agents
+npm install
+```
+
+**Step 2 — Add your API key**
+
+```bash
+export ANTHROPIC_API_KEY=your_key_here
+```
+
+Get a free key at: https://console.anthropic.com
+
+**Step 3 — Run the example**
+
+```bash
+npx ts-node examples/basic-agent/index.ts
+```
+
+You should see an AI agent response in your terminal within 10 seconds.
+That is it — you just ran your first Zyphos agent.
+
+---
+
+## Install in your own project
+
+```bash
+npm install @zyphos/agents @zyphos/orchestrator @zyphos/guardrails
+```
 
 ---
 
 ## Packages
 
 | Package | Description |
-|---|---|
-| [`@zyphos/agents`](packages/agents) | Core `ZyphosAgent` class — LLM execution, retry, provider fallback |
-| [`@zyphos/orchestrator`](packages/orchestrator) | Sequential, Supervisor, and Parallel orchestration patterns |
-| [`@zyphos/guardrails`](packages/guardrails) | PII redaction, Human-in-the-Loop gates, exponential backoff retry |
-| [`@zyphos/builder`](packages/builder) | Natural language → React component JSON schema generator |
+| --- | --- |
+| [`@zyphos/agents`](https://github.com/kirankshetty/zyphos-agents/blob/main/packages/agents) | Core `ZyphosAgent` class — LLM execution, retry, provider fallback |
+| [`@zyphos/orchestrator`](https://github.com/kirankshetty/zyphos-agents/blob/main/packages/orchestrator) | Sequential, Supervisor, and Parallel orchestration patterns |
+| [`@zyphos/guardrails`](https://github.com/kirankshetty/zyphos-agents/blob/main/packages/guardrails) | PII redaction, Human-in-the-Loop gates, exponential backoff retry |
+| [`@zyphos/builder`](https://github.com/kirankshetty/zyphos-agents/blob/main/packages/builder) | Natural language → React component JSON schema generator |
+| [`@zyphos/connector`](https://github.com/kirankshetty/zyphos-agents/blob/main/packages/connector) | ConnectionAgent, SchemaMappingAgent, SyncAgent, WebhookAgent *(coming soon)* |
+| [`@zyphos/analyst`](https://github.com/kirankshetty/zyphos-agents/blob/main/packages/analyst) | IngestionAgent, QueryAgent, AnomalyAgent, NarrativeAgent *(coming soon)* |
 
 ---
 
-## Quick Start
+## Quick Start (from cloned repo)
 
 ```bash
 cd zyphos-agents
@@ -64,7 +109,7 @@ if (result.success) {
 ### `AgentConfig` options
 
 | Field | Type | Default | Description |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `name` | `string` | required | Human-readable name for logging |
 | `provider` | `"anthropic" \| "openai"` | `"anthropic"` | Preferred LLM provider |
 | `model` | `string` | `claude-sonnet-4-5` | Model identifier |
@@ -78,7 +123,7 @@ if (result.success) {
 
 ### Environment variables
 
-```
+```bash
 ANTHROPIC_API_KEY=sk-ant-...
 OPENAI_API_KEY=sk-...
 
@@ -131,15 +176,18 @@ console.log(result.outputs["Report"].output);
 import { ParallelOrchestrator } from "@zyphos/orchestrator";
 
 const steps = [
-  { name: "PricingAnalysis",   agent: pricingAgent,   buildPrompt: () => "Analyse pricing…", sequential: false },
+  { name: "PricingAnalysis",   agent: pricingAgent,   buildPrompt: () => "Analyse pricing…",  sequential: false },
   { name: "FeatureAnalysis",   agent: featureAgent,   buildPrompt: () => "Analyse features…", sequential: false },
-  { name: "SentimentAnalysis", agent: sentimentAgent, buildPrompt: () => "Analyse reviews…", sequential: false },
+  { name: "SentimentAnalysis", agent: sentimentAgent, buildPrompt: () => "Analyse reviews…",  sequential: false },
   {
     name: "FinalSummary",
     agent: summaryAgent,
     sequential: true, // runs AFTER all parallel steps complete
     buildPrompt: (prior) =>
-      `Summarise: ${JSON.stringify({ pricing: prior["PricingAnalysis"]?.output, features: prior["FeatureAnalysis"]?.output })}`,
+      `Summarise: ${JSON.stringify({
+        pricing:  prior["PricingAnalysis"]?.output,
+        features: prior["FeatureAnalysis"]?.output,
+      })}`,
   },
 ];
 
@@ -154,7 +202,7 @@ import { SupervisorOrchestrator } from "@zyphos/orchestrator";
 const supervisor = new SupervisorOrchestrator({
   name: "CompetitiveAnalysis",
   managerAgent: plannerAgent,   // breaks task into subtasks
-  workerAgent: analystAgent,    // executes each subtask
+  workerAgent:  analystAgent,   // executes each subtask
   reducerAgent: editorAgent,    // optional: consolidates outputs
   task: "Write a competitive analysis report for Acme Corp covering pricing, features, and positioning",
   parallel: true,               // run subtasks in parallel
@@ -187,9 +235,9 @@ const redactor = new PIIRedactor({
   ],
 });
 
-const safetPrompt = redactor.redact(userInput);
-const hasPII = redactor.hasPII(userInput);       // boolean
-const found  = redactor.scan(userInput);          // [{ type, count }]
+const safePrompt = redactor.redact(userInput);
+const hasPII    = redactor.hasPII(userInput);  // boolean
+const found     = redactor.scan(userInput);    // [{ type, count }]
 ```
 
 ### Human-in-the-Loop Gate
@@ -201,14 +249,13 @@ import { HumanApprovalGate, InMemoryApprovalAdapter } from "@zyphos/guardrails";
 const adapter = new InMemoryApprovalAdapter();
 const gate = new HumanApprovalGate({
   adapter,
-  timeoutMs: 5 * 60 * 1000,  // 5 minutes
-  pollIntervalMs: 3_000,
-  timeoutBehavior: "reject",  // safe default
+  timeoutMs:       5 * 60 * 1000, // 5 minutes
+  pollIntervalMs:  3_000,
+  timeoutBehavior: "reject",       // safe default
 });
 
-// In your workflow:
 const approved = await gate.request({
-  id: "payroll-run-q4",
+  id:      "payroll-run-q4",
   summary: "Agent wants to trigger payroll run for 250 employees totalling $450,000. Approve?",
   payload: { agentId: "PayrollAgent", employeeCount: 250, totalAmount: 450_000 },
 });
@@ -228,11 +275,11 @@ const data = await withRetry(
   {
     maxAttempts: 5,
     baseDelayMs: 500,
-    maxDelayMs: 10_000,
-    jitter: true,
+    maxDelayMs:  10_000,
+    jitter:      true,
     onRetry: ({ attempt, error, nextDelayMs }) =>
       console.log(`Retry ${attempt}: ${error.message} — waiting ${nextDelayMs}ms`),
-    shouldRetry: (err) => !err.message.includes("404"), // don't retry 404s
+    shouldRetry: (err) => !err.message.includes("404"),
   }
 );
 
@@ -264,15 +311,32 @@ console.log(schema.components[0].actions); // [{ id, label, type }]
 
 ---
 
+## 💡 What can you build
+
+| Domain | Example agent workflows |
+| --- | --- |
+| **HR & People Ops** | Onboarding automation, payroll validation, compliance checks, leave approvals |
+| **Finance** | Invoice processing, expense approval, budget variance alerts, audit trail |
+| **Supply Chain** | Vendor evaluation, procurement approval, risk assessment, demand forecasting |
+| **Sales** | Lead scoring, contract review, commission calculation, pipeline health checks |
+| **Operations** | Capacity planning, incident response, shift scheduling, SLA monitoring |
+| **Data & Analytics** | Anomaly detection, NL-to-SQL queries, automated weekly narratives, data quality checks |
+| **IT** | Access provisioning, device compliance, SSO management, offboarding workflows |
+| **Any domain** | The framework is fully domain-agnostic — bring your own business logic |
+
+---
+
 ## Project Structure
 
 ```
 zyphos-agents/
 ├── packages/
-│   ├── agents/         # @zyphos/agents      — ZyphosAgent core
-│   ├── orchestrator/   # @zyphos/orchestrator — Sequential, Parallel, Supervisor
-│   ├── guardrails/     # @zyphos/guardrails  — PII, HITL, Retry
-│   └── builder/        # @zyphos/builder      — PageBuilder
+│   ├── agents/         # @zyphos/agents       — ZyphosAgent core
+│   ├── orchestrator/   # @zyphos/orchestrator  — Sequential, Parallel, Supervisor
+│   ├── guardrails/     # @zyphos/guardrails   — PII, HITL, Retry
+│   ├── builder/        # @zyphos/builder       — PageBuilder
+│   ├── connector/      # @zyphos/connector     — coming soon
+│   └── analyst/        # @zyphos/analyst       — coming soon
 ├── examples/
 │   ├── basic-agent/            — single agent in 10 lines
 │   ├── orchestrated-workflow/  — 3-agent sequential pipeline
@@ -287,10 +351,11 @@ zyphos-agents/
 
 ## Where the Logic Came From
 
-The following files in the original Zyphos repository contained the AI agent layer that was extracted and generalised into this package:
+The following files in the original Zyphos repository contained the AI
+agent layer that was extracted and generalised into this package:
 
 | Zyphos file | Extracted into |
-|---|---|
+| --- | --- |
 | `server/orchestration-runner.ts` | `@zyphos/orchestrator` — parallel + sequential step model, step output capping, callAgent() pattern |
 | `server/routes.ts` | `@zyphos/agents` — Anthropic/OpenAI client factory, agent execution loop, timeout config; `@zyphos/builder` — page-builder endpoint pattern |
 | `server/job-queue.ts` | Retry and job dispatch patterns inform `@zyphos/guardrails/retry.ts` |
@@ -298,7 +363,38 @@ The following files in the original Zyphos repository contained the AI agent lay
 | `server/scheduler.ts` | Scheduled agent execution pattern documented in orchestrator |
 | `server/bull-worker.ts` | Background worker job processing patterns |
 
-All Zyphos-specific concepts (employees, payroll, attendance, companies, database tables) have been removed and replaced with generic interfaces any developer can implement.
+All Zyphos-specific concepts (employees, payroll, attendance, companies,
+database tables) have been removed and replaced with generic interfaces
+any developer can implement.
+
+---
+
+## 🤝 Contributing
+
+We review all pull requests within 48 hours.
+
+1. Fork this repo
+2. Create a branch: `git checkout -b feature/your-agent-name`
+3. Add your agent blueprint or example in `examples/`
+4. Open a Pull Request with a clear description of what it does
+
+**Good first contributions:**
+
+- New agent blueprints for any business domain
+- Additional working examples
+- Unit tests for any package
+- README improvements or translations
+- Bug fixes and performance improvements
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
+
+---
+
+## 💬 Community
+
+- **GitHub Issues** — [Report bugs or request features](https://github.com/kirankshetty/zyphos-agents/issues)
+- **Discussions** — [Ask questions and share ideas](https://github.com/kirankshetty/zyphos-agents/discussions)
+- **Website** — [zyphos.ai](https://zyphos.ai) (coming soon..)
 
 ---
 
