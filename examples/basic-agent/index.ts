@@ -20,7 +20,6 @@ async function main() {
       '"summary" (2-3 sentences) and "keywords" (array of 5 key terms).',
     // Anthropic is the default provider. Falls back to OpenAI automatically.
     provider: "anthropic",
-    model: "claude-3-5-haiku-20241022", // fast, cheap model for demos
     maxTokens: 512,
   });
 
