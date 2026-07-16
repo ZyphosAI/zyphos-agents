@@ -2,7 +2,7 @@
 
 > Open-source agentic framework for deploying AI agents across any business domain.
 
-Extracted from [Zyphos](https://github.com/kirankshetty/Zyphos) — a production
+Extracted from [Zyphos](https://github.com/ZyphosAI/Zyphos) — a production
 AI-powered business platform — and generalised into six standalone,
 composable packages.
 
@@ -17,7 +17,7 @@ composable packages.
 **Step 1 — Clone and install**
 
 ```bash
-git clone https://github.com/kirankshetty/zyphos-agents.git
+git clone https://github.com/ZyphosAI/zyphos-agents.git
 cd zyphos-agents
 npm install
 ```
@@ -53,12 +53,12 @@ npm install @zyphos/agents @zyphos/orchestrator @zyphos/guardrails
 
 | Package | Description |
 | --- | --- |
-| [`@zyphos/agents`](https://github.com/kirankshetty/zyphos-agents/blob/main/packages/agents) | Core `ZyphosAgent` class — LLM execution, retry, provider fallback |
-| [`@zyphos/orchestrator`](https://github.com/kirankshetty/zyphos-agents/blob/main/packages/orchestrator) | Sequential, Supervisor, and Parallel orchestration patterns |
-| [`@zyphos/guardrails`](https://github.com/kirankshetty/zyphos-agents/blob/main/packages/guardrails) | PII redaction, Human-in-the-Loop gates, exponential backoff retry |
-| [`@zyphos/builder`](https://github.com/kirankshetty/zyphos-agents/blob/main/packages/builder) | Natural language → React component JSON schema generator |
-| [`@zyphos/connector`](https://github.com/kirankshetty/zyphos-agents/blob/main/packages/connector) | ConnectionAgent, SchemaMappingAgent, SyncAgent, WebhookAgent *(coming soon)* |
-| [`@zyphos/analyst`](https://github.com/kirankshetty/zyphos-agents/blob/main/packages/analyst) | IngestionAgent, QueryAgent, AnomalyAgent, NarrativeAgent *(coming soon)* |
+| [`@zyphos/agents`](https://github.com/ZyphosAI/zyphos-agents/blob/main/packages/agents) | Core `ZyphosAgent` class — LLM execution, retry, provider fallback |
+| [`@zyphos/orchestrator`](https://github.com/ZyphosAI/zyphos-agents/blob/main/packages/orchestrator) | Sequential, Supervisor, and Parallel orchestration patterns |
+| [`@zyphos/guardrails`](https://github.com/ZyphosAI/zyphos-agents/blob/main/packages/guardrails) | PII redaction, Human-in-the-Loop gates, exponential backoff retry |
+| [`@zyphos/builder`](https://github.com/ZyphosAI/zyphos-agents/blob/main/packages/builder) | Natural language → React component JSON schema generator |
+| [`@zyphos/connector`](https://github.com/ZyphosAI/zyphos-agents/blob/main/packages/connector) | ConnectionAgent, SchemaMappingAgent, SyncAgent, WebhookAgent *(coming soon)* |
+| [`@zyphos/analyst`](https://github.com/ZyphosAI/zyphos-agents/blob/main/packages/analyst) | IngestionAgent, QueryAgent, AnomalyAgent, NarrativeAgent *(coming soon)* |
 
 ---
 
