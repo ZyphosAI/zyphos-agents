@@ -392,8 +392,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
 
 ## 💬 Community
 
-- **GitHub Issues** — [Report bugs or request features](https://github.com/kirankshetty/zyphos-agents/issues)
-- **Discussions** — [Ask questions and share ideas](https://github.com/kirankshetty/zyphos-agents/discussions)
+- **GitHub Issues** — [Report bugs or request features](https://github.com/ZyphosAI/zyphos-agents/issues)
+- **Discussions** — [Ask questions and share ideas](https://github.com/ZyphosAI/zyphos-agents/discussions)
 - **Website** — [zyphos.ai](https://zyphos.ai) (coming soon..)
 
 ---
