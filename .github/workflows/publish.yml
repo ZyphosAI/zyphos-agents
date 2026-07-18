@@ -24,10 +24,12 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install --registry=https://registry.npmjs.org/
+        run: npm install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build all packages
-        run: npm run build --workspaces --if-present || echo "No build script found"
+        run: npm run build --workspaces --if-present || echo "No build script"
 
       - name: Verify npm auth
         run: npm whoami
